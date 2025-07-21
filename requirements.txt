@@ -4,4 +4,8 @@ matplotlib
 scikit-learn
 tensorflow
 seaborn
--e .
+scikit-learn
+catboost
+xgboost
+
+# -e .
