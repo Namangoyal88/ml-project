@@ -12,6 +12,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 from src.logger import logging
 from src.exception import CustomException
+from src.utils import save_object
 
 
 @dataclass
@@ -42,7 +43,7 @@ class DataTransformation:
                 steps = [
                     ("imputer", SimpleImputer(strategy = "most_frequent")),
                     ("one_hot_encoder", OneHotEncoder()),
-                    ("scaler", StandardScaler())
+                    ("scaler", StandardScaler(with_mean=False))
                 ]
             )
             
@@ -65,7 +66,7 @@ class DataTransformation:
             test_data = pd.read_csv(test_path)
 
             logging.info("Read train and test data completed")
-            logging.info("obraining preprocessing object")
+            logging.info("obtaining preprocessing object")
 
             preprocessing_obj = self.get_transformer_object()
 
@@ -98,5 +99,5 @@ class DataTransformation:
                 self.data_transformation_config.preprocessor_obj_file_path
             )
 
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e, sys)
